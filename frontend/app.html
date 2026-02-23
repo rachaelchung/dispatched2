@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DISPATCH</title>
+  <link rel="stylesheet" href="/css/app.css">
+  <link rel="stylesheet" href="/css/chat.css">
+  <link rel="stylesheet" href="/css/dashboard.css">
+  <link rel="stylesheet" href="/css/calendar.css">
+</head>
+<body>
+
+<div id="app-shell">
+
+  <!-- ============================
+       SIDEBAR
+       ============================ -->
+  <aside id="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo-text">DISPATCH<span>.</span></div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <div class="nav-section-label">Chats</div>
+      <div id="chat-list"></div>
+      <button class="nav-item add-chat-btn" id="add-chat-btn">
+        <span class="nav-icon">＋</span> New chat
+      </button>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="user-info">
+        <div class="user-avatar" id="user-avatar">?</div>
+        <span class="user-email" id="user-email"></span>
+        <button class="logout-btn" id="logout-btn" title="Log out">↩</button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ============================
+       CHAT PANEL (left)
+       ============================ -->
+  <section id="chat-panel">
+    <div class="panel-header">
+      <span class="panel-title">✦ Chat</span>
+      <span style="font-size:0.72rem; color: var(--text-muted)">Just type — Dispatch handles the rest</span>
+    </div>
+
+    <div id="chat-messages">
+      <div class="chat-empty">
+        <div class="chat-empty-icon">✦</div>
+        <div class="chat-empty-title">What's on your plate?</div>
+        <div class="chat-empty-hint">
+          Type anything — "chem homework due Friday", "call dentist tomorrow 2pm",
+          "finish that project" — and Dispatch will organize it for you.
+        </div>
+      </div>
+    </div>
+
+    <div id="chat-input-area">
+      <div class="chat-input-wrapper">
+        <div id="file-preview"></div>
+        <textarea
+          id="message-input"
+          placeholder="What do you need to do?"
+          rows="1"
+        ></textarea>
+        <div class="input-toolbar">
+          <div class="input-tools">
+            <button class="attach-btn" id="attach-btn" title="Attach files">📎</button>
+          </div>
+          <button class="send-btn" id="send-btn" disabled title="Send (Enter)">↑</button>
+        </div>
+      </div>
+      <div class="input-hint">Press Enter to send · Shift+Enter for new line</div>
+      <input type="file" id="file-input" multiple style="display:none">
+    </div>
+  </section>
+
+  <!-- ============================
+       RIGHT PANEL (dashboard / calendar)
+       ============================ -->
+  <section id="right-panel">
+    <div class="panel-header">
+      <div class="panel-tabs">
+        <button class="tab-btn active" data-view="dashboard" onclick="switchView('dashboard')">Dashboard</button>
+        <button class="tab-btn" data-view="calendar" onclick="switchView('calendar')">Calendar</button>
+      </div>
+      <button class="btn-icon" id="add-task-manual" title="Add task manually" style="font-size:1.1rem">＋</button>
+    </div>
+
+    <!-- Dashboard View -->
+    <div id="dashboard-view" style="display:flex;">
+      <div id="filter-chips" style="display:flex; flex-wrap:wrap; gap:0.4rem; padding: 0.5rem 1.25rem 0; flex-shrink:0;"></div>
+      <div id="timeline-container" class="dashboard-controls" style="flex:1; overflow-y:auto; padding: 0.75rem 1.25rem 2rem; display:flex; flex-direction:column; gap:1.25rem;"></div>
+    </div>
+
+    <!-- Calendar View -->
+    <div id="calendar-view" style="display:none;">
+      <div class="calendar-nav" style="padding: 0.5rem 1.25rem 0; flex-shrink:0;">
+        <button class="cal-nav-btn" id="cal-prev">‹</button>
+        <span class="cal-month-label" id="cal-month-label"></span>
+        <button class="cal-nav-btn" id="cal-next">›</button>
+        <button class="cal-today-btn" id="cal-today">Today</button>
+      </div>
+
+      <div style="padding: 0.75rem 1.25rem; flex-shrink:0;">
+        <div class="cal-day-headers">
+          <div class="cal-day-header">Sun</div>
+          <div class="cal-day-header">Mon</div>
+          <div class="cal-day-header">Tue</div>
+          <div class="cal-day-header">Wed</div>
+          <div class="cal-day-header">Thu</div>
+          <div class="cal-day-header">Fri</div>
+          <div class="cal-day-header">Sat</div>
+        </div>
+      </div>
+
+      <div id="cal-weeks" style="padding: 0 1.25rem 1.25rem; flex:1; overflow-y:auto; display:flex; flex-direction:column; gap:2px;"></div>
+    </div>
+  </section>
+
+</div>
+
+<!-- ============================
+     MODALS
+     ============================ -->
+
+<!-- Edit Task Modal -->
+<div class="modal-overlay" id="edit-modal">
+  <div class="modal-card">
+    <button class="modal-close" id="edit-modal-close">✕</button>
+    <div class="modal-title" id="edit-modal-title">Edit Task</div>
+
+    <div class="form-group">
+      <label class="form-label">Title</label>
+      <input class="form-input" type="text" id="edit-title" placeholder="Task title">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Description</label>
+      <textarea class="form-textarea" id="edit-description" placeholder="Optional notes…" rows="2"></textarea>
+    </div>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap: 0.75rem;">
+      <div class="form-group">
+        <label class="form-label">Due Date</label>
+        <input class="form-input" type="date" id="edit-date">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Due Time</label>
+        <input class="form-input" type="time" id="edit-time">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Tag</label>
+      <select class="form-select form-input" id="edit-tag">
+        <option value="todo">todo</option>
+        <option value="assignment">assignment</option>
+        <option value="test">test</option>
+        <option value="project">project</option>
+        <option value="meeting">meeting</option>
+        <option value="deadline">deadline</option>
+        <option value="errand">errand</option>
+        <option value="reminder">reminder</option>
+      </select>
+    </div>
+    <div class="edit-modal-actions">
+      <button class="btn btn-secondary" id="edit-cancel">Cancel</button>
+      <button class="btn btn-primary" id="edit-save">Save</button>
+    </div>
+  </div>
+</div>
+
+<!-- Duplicate Detection Modal -->
+<div class="modal-overlay" id="dup-modal">
+  <div class="modal-card">
+    <button class="modal-close" id="dup-modal-close">✕</button>
+    <div class="modal-title">Looks familiar…</div>
+    <div class="dup-modal-body">
+      This task might already exist in your list:
+      <div class="dup-task-preview">
+        <div class="dup-task-title" id="dup-task-title">Existing task</div>
+      </div>
+      Would you like to update it, or add a new one?
+    </div>
+    <div class="dup-actions">
+      <button class="btn btn-secondary" id="dup-add-new">Add as new</button>
+      <button class="btn btn-primary" id="dup-update">Update existing</button>
+    </div>
+  </div>
+</div>
+
+<!-- Day Detail Modal (calendar) -->
+<div class="modal-overlay" id="day-detail-modal">
+  <div class="modal-card" style="max-width: 480px;">
+    <button class="modal-close" id="day-detail-close">✕</button>
+    <div class="day-detail-header">
+      <div class="day-detail-date" id="day-detail-date"></div>
+    </div>
+    <div class="day-detail-tasks" id="day-detail-tasks"></div>
+  </div>
+</div>
+
+<!-- New Chat Modal -->
+<div class="modal-overlay" id="new-chat-modal">
+  <div class="modal-card">
+    <button class="modal-close" id="new-chat-modal-close">✕</button>
+    <div class="modal-title">New chat</div>
+    <div class="form-group">
+      <label class="form-label">Chat name</label>
+      <input class="form-input" type="text" id="new-chat-name" placeholder="e.g. Assignments, Work, Errands">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Color</label>
+      <input type="color" id="new-chat-color" value="#8b6fd4" style="width:100%; height:38px; border-radius:var(--radius-md); border:1px solid var(--border-subtle); background:var(--bg-elevated); cursor:pointer;">
+    </div>
+    <div class="edit-modal-actions">
+      <button class="btn btn-secondary" id="new-chat-cancel">Cancel</button>
+      <button class="btn btn-primary" id="new-chat-submit">Create</button>
+    </div>
+  </div>
+</div>
+
+<!-- Toast container -->
+<div id="toast-container"></div>
+
+<!-- Close modals on overlay click -->
+<script>
+  document.querySelectorAll('.modal-overlay').forEach(overlay => {
+    overlay.addEventListener('click', (e) => {
+      if (e.target === overlay) overlay.classList.remove('active');
+    });
+  });
+</script>
+
+<script src="/js/app.js"></script>
+<script src="/js/chat.js"></script>
+<script src="/js/dashboard.js"></script>
+<script src="/js/calendar.js"></script>
+</body>
+</html>

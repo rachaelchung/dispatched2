@@ -1,0 +1,217 @@
+/* ========== CALENDAR VIEW ========== */
+
+#calendar-view {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem 1.25rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* ========== CALENDAR NAV ========== */
+.calendar-nav {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.cal-month-label {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  min-width: 10ch;
+  text-align: center;
+}
+
+.cal-nav-btn {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  color: var(--text-secondary);
+  width: 28px; height: 28px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: all 0.15s;
+}
+.cal-nav-btn:hover { background: var(--bg-elevated); color: var(--text-primary); }
+
+.cal-today-btn {
+  background: none;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  color: var(--text-secondary);
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  padding: 0.25rem 0.6rem;
+  cursor: pointer;
+  transition: all 0.15s;
+  margin-left: auto;
+}
+.cal-today-btn:hover { background: var(--bg-surface); color: var(--text-primary); }
+
+/* ========== MONTH GRID ========== */
+.calendar-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+}
+
+.cal-day-headers {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+  margin-bottom: 2px;
+}
+
+.cal-day-header {
+  text-align: center;
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  padding: 0.3rem;
+}
+
+.cal-weeks {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+}
+
+.cal-week {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+  flex: 1;
+}
+
+/* ========== DAY CELL ========== */
+.cal-day {
+  background: var(--bg-surface);
+  border-radius: var(--radius-sm);
+  padding: 0.4rem 0.4rem 0.3rem;
+  min-height: 72px;
+  cursor: pointer;
+  transition: all 0.15s;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  border: 1px solid transparent;
+  position: relative;
+}
+
+.cal-day:hover {
+  background: var(--bg-elevated);
+  border-color: var(--border-subtle);
+}
+
+.cal-day.today {
+  border-color: var(--accent-primary);
+  background: rgba(139,111,212,0.06);
+}
+
+.cal-day.other-month {
+  opacity: 0.35;
+}
+
+.cal-day.has-tasks {
+  border-color: var(--border-subtle);
+}
+
+.cal-day-number {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  line-height: 1;
+  width: 20px; height: 20px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.cal-day.today .cal-day-number {
+  background: var(--accent-primary);
+  color: #fff;
+}
+
+/* Task indicators on day */
+.cal-task-dots {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px;
+  margin-top: 2px;
+}
+
+.cal-task-dot {
+  width: 5px; height: 5px;
+  border-radius: 50%;
+}
+
+/* Task mini-cards on hover/expanded day */
+.cal-task-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+}
+
+.cal-task-item {
+  font-size: 0.68rem;
+  font-weight: 500;
+  padding: 0.15rem 0.3rem;
+  border-radius: 3px;
+  color: #fff;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  line-height: 1.4;
+  opacity: 0.85;
+}
+
+.cal-task-item[data-tag="todo"]        { background: var(--tag-todo); }
+.cal-task-item[data-tag="assignment"]  { background: var(--tag-assignment); }
+.cal-task-item[data-tag="test"]        { background: var(--tag-test); }
+.cal-task-item[data-tag="project"]     { background: var(--tag-project); }
+.cal-task-item[data-tag="meeting"]     { background: var(--tag-meeting); }
+.cal-task-item[data-tag="deadline"]    { background: var(--tag-deadline); }
+.cal-task-item[data-tag="errand"]      { background: var(--tag-errand); }
+.cal-task-item[data-tag="reminder"]    { background: var(--tag-reminder); }
+
+.cal-task-overflow {
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  padding: 0 0.3rem;
+}
+
+/* ========== DAY DETAIL MODAL ========== */
+.day-detail-header {
+  margin-bottom: 1rem;
+}
+
+.day-detail-date {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.day-detail-tasks {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  max-height: 50vh;
+  overflow-y: auto;
+}
+
+.day-detail-empty {
+  padding: 1.5rem;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}

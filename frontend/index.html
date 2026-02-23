@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DISPATCH — Task everything</title>
+  <link rel="stylesheet" href="/css/landing.css">
+</head>
+<body class="landing-page">
+
+  <!-- NAV -->
+  <nav class="landing-nav">
+    <div class="nav-logo">DISPATCH<span>.</span></div>
+    <div class="nav-actions">
+      <button class="btn btn-ghost" onclick="openModal('login')">Log in</button>
+      <button class="btn btn-primary" onclick="openModal('signup')">Get started</button>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="landing-hero">
+    <div class="hero-eyebrow">Powered by OpenAI</div>
+
+    <h1 class="hero-title">
+      Just<br><span class="highlight">say it.</span><br>We'll track it.
+    </h1>
+
+    <p class="hero-subtitle">
+      DISPATCH turns your messy thoughts into organized tasks in seconds.
+      Type like you think, not like a form.
+    </p>
+
+    <div class="hero-cta">
+      <button class="btn btn-primary" onclick="openModal('signup')" style="font-size:1rem; padding: 0.85rem 2rem;">
+        Start for free →
+      </button>
+      <button class="btn btn-secondary" onclick="openModal('login')">
+        I have an account
+      </button>
+    </div>
+
+    <!-- UI MOCKUP -->
+    <div class="hero-mockup">
+      <div class="mockup-bar">
+        <div class="mockup-dot"></div>
+        <div class="mockup-dot"></div>
+        <div class="mockup-dot"></div>
+      </div>
+      <div class="mockup-body">
+        <div class="mockup-chat">
+          <div class="mock-msg">
+            <div class="mock-avatar">ME</div>
+            <div class="mock-bubble">chem lab report due next Thursday at 5pm</div>
+          </div>
+          <div class="mock-msg user-msg">
+            <div class="mock-avatar" style="background:#54a0e0">AI</div>
+            <div class="mock-bubble user-bubble">Got it — added as an assignment ✓</div>
+          </div>
+          <div class="mock-msg">
+            <div class="mock-avatar">ME</div>
+            <div class="mock-bubble">actually make that 6pm</div>
+          </div>
+          <div class="mock-msg user-msg">
+            <div class="mock-avatar" style="background:#54a0e0">AI</div>
+            <div class="mock-bubble user-bubble">Updated to 6:00 PM ✓</div>
+          </div>
+          <div class="mock-msg">
+            <div class="mock-avatar">ME</div>
+            <div class="mock-bubble">buy groceries and also finish the stats homework tonight</div>
+          </div>
+        </div>
+        <div class="mockup-tasks">
+          <div class="mock-section-label">Today</div>
+          <div class="mock-task-card" style="border-left-color: #e07b54">
+            <div class="mock-task-title">Stats homework</div>
+            <div class="mock-task-meta">assignment · tonight</div>
+          </div>
+          <div class="mock-task-card" style="border-left-color: #d4a853">
+            <div class="mock-task-title">Buy groceries</div>
+            <div class="mock-task-meta">errand</div>
+          </div>
+          <div class="mock-section-label" style="margin-top: 0.75rem">This Week</div>
+          <div class="mock-task-card" style="border-left-color: #e07b54">
+            <div class="mock-task-title">Chem lab report</div>
+            <div class="mock-task-meta">assignment · Thu, 6:00 PM</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <div class="features-strip">
+    <div class="feature-item"><span class="feature-icon">⚡</span> Natural language input</div>
+    <div class="feature-item"><span class="feature-icon">🧠</span> AI-powered parsing</div>
+    <div class="feature-item"><span class="feature-icon">📅</span> Calendar & timeline views</div>
+    <div class="feature-item"><span class="feature-icon">📎</span> File attachments</div>
+    <div class="feature-item"><span class="feature-icon">✏️</span> Contextual editing</div>
+  </div>
+
+  <!-- LOGIN MODAL -->
+  <div class="modal-overlay" id="login-modal">
+    <div class="modal-card">
+      <button class="modal-close" onclick="closeModal('login')">✕</button>
+      <div class="modal-title">Welcome back</div>
+      <div class="modal-subtitle">Log in to your DISPATCH account</div>
+      <div class="form-group">
+        <label class="form-label">Email</label>
+        <input class="form-input" type="email" id="login-email" placeholder="you@example.com" autocomplete="email">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Password</label>
+        <input class="form-input" type="password" id="login-password" placeholder="••••••••" autocomplete="current-password">
+      </div>
+      <div class="form-error" id="login-error"></div>
+      <button class="btn btn-primary form-submit" id="login-submit">Log in</button>
+      <div class="modal-toggle">
+        No account? <a href="#" onclick="switchModal('login','signup')">Sign up</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- SIGNUP MODAL -->
+  <div class="modal-overlay" id="signup-modal">
+    <div class="modal-card">
+      <button class="modal-close" onclick="closeModal('signup')">✕</button>
+      <div class="modal-title">Create account</div>
+      <div class="modal-subtitle">Start dispatching your tasks</div>
+      <div class="form-group">
+        <label class="form-label">Email</label>
+        <input class="form-input" type="email" id="signup-email" placeholder="you@example.com" autocomplete="email">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Password</label>
+        <input class="form-input" type="password" id="signup-password" placeholder="At least 6 characters" autocomplete="new-password">
+      </div>
+      <div class="form-error" id="signup-error"></div>
+      <button class="btn btn-primary form-submit" id="signup-submit">Create account</button>
+      <div class="modal-toggle">
+        Already have one? <a href="#" onclick="switchModal('signup','login')">Log in</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Check if already logged in
+    fetch('/auth/me', { credentials: 'include' })
+      .then(r => { if (r.ok) window.location.href = '/app'; });
+
+    function openModal(type) {
+      document.getElementById(type + '-modal').classList.add('active');
+    }
+    function closeModal(type) {
+      document.getElementById(type + '-modal').classList.remove('active');
+      document.getElementById(type + '-error').textContent = '';
+    }
+    function switchModal(from, to) {
+      closeModal(from);
+      openModal(to);
+    }
+
+    // Close on overlay click
+    document.querySelectorAll('.modal-overlay').forEach(overlay => {
+      overlay.addEventListener('click', (e) => {
+        if (e.target === overlay) {
+          const id = overlay.id.replace('-modal', '');
+          closeModal(id);
+        }
+      });
+    });
+
+    async function submitAuth(type) {
+      const email    = document.getElementById(type + '-email').value.trim();
+      const password = document.getElementById(type + '-password').value;
+      const errorEl  = document.getElementById(type + '-error');
+      const btn      = document.getElementById(type + '-submit');
+
+      errorEl.textContent = '';
+      if (!email || !password) { errorEl.textContent = 'All fields required'; return; }
+
+      btn.disabled = true;
+      btn.textContent = type === 'login' ? 'Logging in…' : 'Creating account…';
+
+      const r = await fetch('/auth/' + type, {
+        method: 'POST',
+        credentials: 'include',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password })
+      });
+      const data = await r.json();
+
+      if (r.ok) {
+        window.location.href = '/app';
+      } else {
+        errorEl.textContent = data.error || 'Something went wrong';
+        btn.disabled = false;
+        btn.textContent = type === 'login' ? 'Log in' : 'Create account';
+      }
+    }
+
+    document.getElementById('login-submit').addEventListener('click', () => submitAuth('login'));
+    document.getElementById('signup-submit').addEventListener('click', () => submitAuth('signup'));
+
+    // Enter key support
+    ['login-email', 'login-password'].forEach(id => {
+      document.getElementById(id).addEventListener('keydown', e => {
+        if (e.key === 'Enter') submitAuth('login');
+      });
+    });
+    ['signup-email', 'signup-password'].forEach(id => {
+      document.getElementById(id).addEventListener('keydown', e => {
+        if (e.key === 'Enter') submitAuth('signup');
+      });
+    });
+  </script>
+</body>
+</html>
