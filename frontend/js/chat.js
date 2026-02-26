@@ -148,7 +148,13 @@ function renderMessage(msg, isOptimistic = false) {
   row.id = msg.id;
 
   const initials = App.user?.email?.slice(0, 2).toUpperCase() || 'ME';
-  const time = new Date(msg.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  const msgDate = new Date(msg.created_at + 'Z'); // 'Z' forces UTC interpretation
+  const now = new Date();
+  const isToday = msgDate.toDateString() === now.toDateString();
+
+  const time = isToday
+    ? msgDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+    : msgDate.toLocaleDateString([], { month: 'short', day: 'numeric' }) + ' · ' + msgDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
   row.innerHTML = `
     <div class="message-avatar">${initials}</div>

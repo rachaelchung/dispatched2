@@ -1,37 +1,12 @@
 /* ========== APP LAYOUT ========== */
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&display=swap');
 
-:root {
-  --bg-deep:        #1a1820;
-  --bg-base:        #201e2a;
-  --bg-surface:     #2a2738;
-  --bg-elevated:    #332f45;
-  --bg-hover:       #3d3954;
-  --bg-input:       #252232;
+/* ========== THEMES ========== */
 
-  --accent-primary: #8b6fd4;
-  --accent-light:   #a98de8;
-  --accent-soft:    #6b52b0;
-  --accent-glow:    rgba(139, 111, 212, 0.25);
-  --accent-glow-lg: rgba(139, 111, 212, 0.12);
+/* Dark (default) */
+[data-theme="dark"], :root {
 
-  --text-primary:   #e8e4f0;
-  --text-secondary: #a89fc0;
-  --text-muted:     #6b6380;
-  --text-accent:    #c4a8f5;
-
-  --border-subtle:  rgba(139, 111, 212, 0.15);
-  --border-mid:     rgba(139, 111, 212, 0.3);
-
-  --tag-todo:       #6b8dd6;
-  --tag-assignment: #e07b54;
-  --tag-test:       #e05454;
-  --tag-project:    #54a0e0;
-  --tag-meeting:    #54c98a;
-  --tag-deadline:   #e05454;
-  --tag-errand:     #d4a853;
-  --tag-reminder:   #a98de8;
-
+  /* Font and whatnot */
   --font-display:   'Syne', sans-serif;
   --font-body:      'DM Sans', sans-serif;
   --radius-sm:  6px;
@@ -40,7 +15,185 @@
   --radius-xl:  24px;
   --shadow-sm:  0 2px 8px rgba(0,0,0,0.3);
   --shadow-md:  0 4px 20px rgba(0,0,0,0.4);
+  --shadow-lg:  0 8px 40px rgba(0,0,0,0.5);
+  --shadow-glow: 0 0 30px var(--accent-glow);
   --sidebar-w:  240px;
+
+  --bg-deep:        #1a1820;
+  --bg-base:        #201e2a;
+  --bg-surface:     #2a2738;
+  --bg-elevated:    #332f45;
+  --bg-hover:       #3d3954;
+  --bg-input:       #252232;
+  --accent-primary: #8b6fd4;
+  --accent-light:   #a98de8;
+  --accent-soft:    #6b52b0;
+  --accent-glow:    rgba(139, 111, 212, 0.25);
+  --accent-glow-lg: rgba(139, 111, 212, 0.12);
+  --text-primary:   #e8e4f0;
+  --text-secondary: #a89fc0;
+  --text-muted:     #6b6380;
+  --text-accent:    #c4a8f5;
+  --border-subtle:  rgba(139, 111, 212, 0.15);
+  --border-mid:     rgba(139, 111, 212, 0.3);
+}
+
+/* Light */
+[data-theme="light"] {
+  --bg-deep:        #f0eef8;
+  --bg-base:        #f7f5ff;
+  --bg-surface:     #ffffff;
+  --bg-elevated:    #ede9f8;
+  --bg-hover:       #e4dff5;
+  --bg-input:       #f0eef8;
+  --accent-primary: #7c5cbf;
+  --accent-light:   #9b7dd4;
+  --accent-soft:    #6b52b0;
+  --accent-glow:    rgba(124, 92, 191, 0.2);
+  --accent-glow-lg: rgba(124, 92, 191, 0.08);
+  --text-primary:   #1e1a2e;
+  --text-secondary: #4a4060;
+  --text-muted:     #9990b0;
+  --text-accent:    #7c5cbf;
+  --border-subtle:  rgba(124, 92, 191, 0.15);
+  --border-mid:     rgba(124, 92, 191, 0.3);
+}
+
+/* Blueberry */
+[data-theme="blueberry"] {
+  --bg-deep:        #0e1117;
+  --bg-base:        #141720;
+  --bg-surface:     #1c2133;
+  --bg-elevated:    #252d45;
+  --bg-hover:       #2d3656;
+  --bg-input:       #181d2e;
+  --accent-primary: #5b7fe8;
+  --accent-light:   #7d9df0;
+  --accent-soft:    #4060c0;
+  --accent-glow:    rgba(91, 127, 232, 0.25);
+  --accent-glow-lg: rgba(91, 127, 232, 0.1);
+  --text-primary:   #e0e8ff;
+  --text-secondary: #8899cc;
+  --text-muted:     #4d5a80;
+  --text-accent:    #9bb0f0;
+  --border-subtle:  rgba(91, 127, 232, 0.15);
+  --border-mid:     rgba(91, 127, 232, 0.3);
+}
+
+/* Pink Lemonade */
+[data-theme="pink-lemonade"] {
+  --bg-deep:        #fff0f5;
+  --bg-base:        #fff5f8;
+  --bg-surface:     #ffffff;
+  --bg-elevated:    #ffe4ee;
+  --bg-hover:       #ffd6e7;
+  --bg-input:       #fff0f5;
+  --accent-primary: #e05c8a;
+  --accent-light:   #f07aa0;
+  --accent-soft:    #c04070;
+  --accent-glow:    rgba(224, 92, 138, 0.2);
+  --accent-glow-lg: rgba(224, 92, 138, 0.08);
+  --text-primary:   #2d1020;
+  --text-secondary: #7a3050;
+  --text-muted:     #c090a8;
+  --text-accent:    #e05c8a;
+  --border-subtle:  rgba(224, 92, 138, 0.15);
+  --border-mid:     rgba(224, 92, 138, 0.3);
+}
+
+/* Copper */
+[data-theme="copper"] {
+  --bg-deep:        #1a1208;
+  --bg-base:        #221808;
+  --bg-surface:     #2e2010;
+  --bg-elevated:    #3d2c18;
+  --bg-hover:       #4a3520;
+  --bg-input:       #281e0c;
+  --accent-primary: #c87840;
+  --accent-light:   #e09050;
+  --accent-soft:    #a06030;
+  --accent-glow:    rgba(200, 120, 64, 0.25);
+  --accent-glow-lg: rgba(200, 120, 64, 0.1);
+  --text-primary:   #f0e0c8;
+  --text-secondary: #c0a080;
+  --text-muted:     #806040;
+  --text-accent:    #e09050;
+  --border-subtle:  rgba(200, 120, 64, 0.15);
+  --border-mid:     rgba(200, 120, 64, 0.3);
+}
+
+/* Dev */
+[data-theme="dev"] {
+  --bg-deep:        #000000;
+  --bg-base:        #0a0a0a;
+  --bg-surface:     #111111;
+  --bg-elevated:    #1a1a1a;
+  --bg-hover:       #222222;
+  --bg-input:       #0d0d0d;
+  --accent-primary: #00cc66;
+  --accent-light:   #00ff80;
+  --accent-soft:    #009944;
+  --accent-glow:    rgba(0, 204, 102, 0.25);
+  --accent-glow-lg: rgba(0, 204, 102, 0.1);
+  --text-primary:   #00ff80;
+  --text-secondary: #00aa55;
+  --text-muted:     #005522;
+  --text-accent:    #00ff80;
+  --border-subtle:  rgba(0, 204, 102, 0.15);
+  --border-mid:     rgba(0, 204, 102, 0.3);
+}
+
+/* Dino */
+[data-theme="dino"] {
+  --bg-deep:        #1a2018;
+  --bg-base:        #202820;
+  --bg-surface:     #2a3528;
+  --bg-elevated:    #354030;
+  --bg-hover:       #3f4c38;
+  --bg-input:       #222a20;
+  --accent-primary: #6a9e58;
+  --accent-light:   #84be6e;
+  --accent-soft:    #507840;
+  --accent-glow:    rgba(106, 158, 88, 0.25);
+  --accent-glow-lg: rgba(106, 158, 88, 0.1);
+  --text-primary:   #d8e8d0;
+  --text-secondary: #90a888;
+  --text-muted:     #506848;
+  --text-accent:    #84be6e;
+  --border-subtle:  rgba(106, 158, 88, 0.15);
+  --border-mid:     rgba(106, 158, 88, 0.3);
+}
+
+/* Theme swatch card */
+.theme-swatch {
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: all 0.15s;
+}
+.theme-swatch:hover { transform: scale(1.03); }
+.theme-swatch.selected { border-color: var(--accent-primary); }
+
+.theme-swatch-preview {
+  height: 52px;
+  display: flex;
+  gap: 3px;
+  padding: 6px;
+}
+
+.theme-swatch-bar {
+  border-radius: 3px;
+  flex: 1;
+}
+
+.theme-swatch-label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-align: center;
+  padding: 0.3rem;
+  background: var(--bg-elevated);
+  color: var(--text-secondary);
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -275,7 +428,7 @@ body {
   inset: 0;
   background: rgba(10, 9, 14, 0.75);
   backdrop-filter: blur(6px);
-  z-index: 200;
+  z-index: 1000;
   align-items: center;
   justify-content: center;
 }

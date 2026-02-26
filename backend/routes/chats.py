@@ -43,3 +43,13 @@ def archive_chat(chat_id):
     chat.archived = not chat.archived  # toggle so you can unarchive too
     db.session.commit()
     return jsonify({'chat': chat.to_dict()}), 200
+
+@chats_bp.route('/<int:chat_id>', methods=['PUT'])
+@login_required
+def update_chat(chat_id):
+    chat = Chat.query.filter_by(id=chat_id, user_id=current_user.id).first_or_404()
+    data = request.get_json()
+    if 'color' in data:
+        chat.color = data['color']
+    db.session.commit()
+    return jsonify({'chat': chat.to_dict()}), 200

@@ -129,16 +129,6 @@
   opacity: 0.5;
 }
 
-/* Tag color on left border */
-.task-card[data-tag="todo"]        { border-left-color: var(--tag-todo); }
-.task-card[data-tag="assignment"]  { border-left-color: var(--tag-assignment); }
-.task-card[data-tag="test"]        { border-left-color: var(--tag-test); }
-.task-card[data-tag="project"]     { border-left-color: var(--tag-project); }
-.task-card[data-tag="meeting"]     { border-left-color: var(--tag-meeting); }
-.task-card[data-tag="deadline"]    { border-left-color: var(--tag-deadline); }
-.task-card[data-tag="errand"]      { border-left-color: var(--tag-errand); }
-.task-card[data-tag="reminder"]    { border-left-color: var(--tag-reminder); }
-
 /* Complete checkbox */
 .task-check {
   width: 18px; height: 18px;

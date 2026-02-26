@@ -12,6 +12,53 @@ const App = {
   activeChatId: null,
 };
 
+// Theme management
+const THEMES = [
+  { id: 'dark',         name: 'Dark',         colors: ['#1a1820', '#2a2738', '#8b6fd4', '#e8e4f0'] },
+  { id: 'light',        name: 'Light',        colors: ['#f0eef8', '#ffffff', '#7c5cbf', '#1e1a2e'] },
+  { id: 'blueberry',    name: 'Blueberry',    colors: ['#0e1117', '#1c2133', '#5b7fe8', '#e0e8ff'] },
+  { id: 'pink-lemonade',name: 'Pink Lemonade',colors: ['#fff0f5', '#ffffff', '#e05c8a', '#2d1020'] },
+  { id: 'copper',       name: 'Copper',       colors: ['#1a1208', '#2e2010', '#c87840', '#f0e0c8'] },
+  { id: 'dev',          name: 'Dev',          colors: ['#000000', '#111111', '#00cc66', '#00ff80'] },
+  { id: 'dino',         name: 'Dino',         colors: ['#1a2018', '#2a3528', '#6a9e58', '#d8e8d0'] },
+];
+
+function applyTheme(themeId) {
+  document.documentElement.setAttribute('data-theme', themeId);
+  localStorage.setItem('dispatch-theme', themeId);
+  // Update selected state in grid if open
+  document.querySelectorAll('.theme-swatch').forEach(s => {
+    s.classList.toggle('selected', s.dataset.theme === themeId);
+  });
+}
+
+function initTheme() {
+  const saved = localStorage.getItem('dispatch-theme') || 'dark';
+  document.documentElement.setAttribute('data-theme', saved);
+}
+
+function renderThemeGrid() {
+  const grid = document.getElementById('theme-grid');
+  if (!grid) return;
+  const current = localStorage.getItem('dispatch-theme') || 'dark';
+  grid.innerHTML = '';
+  THEMES.forEach(theme => {
+    const swatch = document.createElement('div');
+    swatch.className = `theme-swatch ${theme.id === current ? 'selected' : ''}`;
+    swatch.dataset.theme = theme.id;
+    swatch.innerHTML = `
+      <div class="theme-swatch-preview" style="background:${theme.colors[0]}">
+        <div class="theme-swatch-bar" style="background:${theme.colors[1]}"></div>
+        <div class="theme-swatch-bar" style="background:${theme.colors[2]}"></div>
+        <div class="theme-swatch-bar" style="background:${theme.colors[3]}"></div>
+      </div>
+      <div class="theme-swatch-label" style="background:${theme.colors[0]}; color:${theme.colors[3]}">${theme.name}</div>
+    `;
+    swatch.addEventListener('click', () => applyTheme(theme.id));
+    grid.appendChild(swatch);
+  });
+}
+
 // ============================
 // API HELPERS
 // ============================
@@ -47,6 +94,7 @@ function showToast(msg, type = 'info') {
 // INIT
 // ============================
 async function initApp() {
+  initTheme();
   const r = await api('GET', '/auth/me');
   if (!r || !r.ok) {
     window.location.href = '/';
@@ -94,6 +142,15 @@ async function initApp() {
       document.getElementById('new-chat-name').value = '';
       await loadChats();
     }
+  });
+
+  // Theme Settings listeners
+  document.getElementById('settings-btn').addEventListener('click', () => {
+    renderThemeGrid();
+    document.getElementById('settings-modal').classList.add('active');
+  });
+  document.getElementById('settings-modal-close').addEventListener('click', () => {
+    document.getElementById('settings-modal').classList.remove('active');
   });
 
   document.getElementById('new-chat-modal-close').addEventListener('click', () => {
@@ -144,6 +201,11 @@ async function loadTasks() {
     App.tasks = r.data.tasks;
     if (App.currentView === 'dashboard') renderDashboard();
     else renderCalendar();
+
+    // Refresh day detail modal if open
+    if (currentDetailDate && document.getElementById('day-detail-modal').classList.contains('active')) {
+      renderDayDetail(currentDetailDate);
+    }
   }
 }
 
@@ -191,7 +253,13 @@ async function loadChats() {
       <span class="chat-name" style="flex:1">${chat.name}</span>
       <button class="chat-archive-btn btn-icon" data-id="${chat.id}" title="Archive">⊖</button>
     `;
-    btn.querySelector('.chat-name').addEventListener('click', () => selectChat(chat));
+    btn.querySelector('.chat-name').addEventListener('click', () => {
+      if (App.activeChatId === chat.id) {
+        openColorPicker(chat);
+      } else {
+        selectChat(chat);
+      }
+    });
     btn.querySelector('.chat-archive-btn').addEventListener('click', async (e) => {
       e.stopPropagation();
       await api('POST', `/api/chats/${chat.id}/archive`);
@@ -268,6 +336,28 @@ function selectChat(chat) {
   loadMessagesForChat(chat.id);
 }
 
+function openColorPicker(chat) {
+  const modal = document.getElementById('color-picker-modal');
+  document.getElementById('color-picker-chat-name').textContent = chat.name;
+  document.getElementById('color-picker-input').value = chat.color || '#8b6fd4';
+
+  const saveBtn = document.getElementById('color-picker-save');
+  const newSaveBtn = saveBtn.cloneNode(true);
+  saveBtn.replaceWith(newSaveBtn);
+
+  newSaveBtn.addEventListener('click', async () => {
+    const color = document.getElementById('color-picker-input').value;
+    const r = await api('PUT', `/api/chats/${chat.id}`, { color });
+    if (r && r.ok) {
+      modal.classList.remove('active');
+      await loadChats();
+      await loadTasks();
+    }
+  });
+
+  modal.classList.add('active');
+}
+
 async function loadMessagesForChat(chatId) {
   const r = await api('GET', `/api/messages?chat_id=${chatId}`);
   if (r && r.ok) {
@@ -284,3 +374,10 @@ async function loadMessagesForChat(chatId) {
 // BOOTSTRAP
 // ============================
 document.addEventListener('DOMContentLoaded', initApp);
+
+
+// Apply theme immediately before full init
+(function() {
+  const saved = localStorage.getItem('dispatch-theme') || 'dark';
+  document.documentElement.setAttribute('data-theme', saved);
+})();

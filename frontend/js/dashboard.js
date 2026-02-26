@@ -1,7 +1,5 @@
 /* ========== DASHBOARD ========== */
 
-const TAGS = ['todo', 'assignment', 'test', 'project', 'meeting', 'deadline', 'errand', 'reminder'];
-
 let editingTaskId = null;
 let dragSrcId = null;
 const openCompletedSections = new Set();
@@ -31,15 +29,15 @@ function renderFilterChips() {
   container.appendChild(allChip);
 
   // Tag chips
-  TAGS.forEach(tag => {
-    const hasTag = App.tasks.some(t => t.tag === tag && t.status === 'active');
+  App.chats.filter(c => !c.archived).forEach(chat => {
+    const hasTag = App.tasks.some(t => t.tag === chat.tag);
     if (!hasTag) return;
 
     const chip = document.createElement('button');
-    chip.className = `filter-chip ${active === tag ? 'active' : ''}`;
-    chip.innerHTML = `<span class="tag-dot" style="background: var(--tag-${tag})"></span>${tag}`;
+    chip.className = `filter-chip ${active === chat.tag ? 'active' : ''}`;
+    chip.innerHTML = `<span class="tag-dot" style="background: ${chat.color}"></span>${chat.name}`;
     chip.addEventListener('click', () => {
-      App.activeTagFilter = App.activeTagFilter === tag ? null : tag;
+      App.activeTagFilter = App.activeTagFilter === chat.tag ? null : chat.tag;
       renderDashboard();
     });
     container.appendChild(chip);
@@ -61,7 +59,7 @@ function renderTimeline() {
     ? allTasks.filter(t => t.tag === App.activeTagFilter)
     : allTasks;
 
-  const overdue  = filteredTasks.filter(t => t.due_date && new Date(t.due_date + 'T00:00:00') < today);
+  const overdue  = filteredTasks.filter(t => t.due_date && new Date(t.due_date + 'T00:00:00') < today && t.status !== 'completed');
   const todayT   = filteredTasks.filter(t => t.due_date && isSameDay(t.due_date, today));
   const thisWeek = filteredTasks.filter(t => {
     if (!t.due_date) return false;
@@ -203,7 +201,7 @@ function buildTaskCard(task) {
     <div class="task-body">
       <div class="task-title">${escapeHtml(task.title)}</div>
       <div class="task-meta">
-        <span class="task-tag" data-tag="${task.tag}">${task.tag}</span>
+        <span class="task-tag" style="background: ${chatColor}22; color: ${chatColor};"">${task.tag}</span>
         ${dateDisplay}
       </div>
       ${descDisplay}
@@ -296,6 +294,17 @@ async function deleteTask(taskId) {
 // ============================
 function openEditModal(taskId) {
   editingTaskId = taskId;
+
+  // Populate tag dropdown from current chats
+  const tagSelect = document.getElementById('edit-tag');
+  tagSelect.innerHTML = '';
+  App.chats.filter(c => !c.archived).forEach(chat => {
+    const option = document.createElement('option');
+    option.value = chat.tag;
+    option.textContent = chat.name;
+    tagSelect.appendChild(option);
+  });
+
   const task = App.tasks.find(t => t.id === taskId);
   if (!task) return;
 
@@ -303,8 +312,9 @@ function openEditModal(taskId) {
   document.getElementById('edit-description').value = task.description || '';
   document.getElementById('edit-date').value = task.due_date || '';
   document.getElementById('edit-time').value = task.due_time || '';
-  document.getElementById('edit-tag').value = task.tag;
+  tagSelect.value = task.tag;
 
+  document.getElementById('edit-modal-title').textContent = 'Edit Task';
   document.getElementById('edit-modal').classList.add('active');
 }
 
@@ -314,8 +324,6 @@ function closeEditModal() {
 }
 
 async function saveEditModal() {
-  if (!editingTaskId) return;
-
   const payload = {
     title: document.getElementById('edit-title').value.trim(),
     description: document.getElementById('edit-description').value.trim() || null,
@@ -326,22 +334,45 @@ async function saveEditModal() {
 
   if (!payload.title) { showToast('Title is required', 'error'); return; }
 
-  const r = await api('PUT', `/api/tasks/${editingTaskId}`, payload);
-  if (r && r.ok) {
-    showToast('Task saved ✓', 'success');
-    closeEditModal();
-    await loadTasks();
+  if (editingTaskId) {
+    // Editing existing task
+    const r = await api('PUT', `/api/tasks/${editingTaskId}`, payload);
+    if (r && r.ok) {
+      showToast('Task saved ✓', 'success');
+      closeEditModal();
+      await loadTasks();
+    }
+  } else {
+    // Creating new task
+    const r = await api('POST', '/api/tasks', payload);
+    if (r && r.ok) {
+      showToast('Task added ✓', 'success');
+      closeEditModal();
+      await loadTasks();
+    }
   }
 }
 
 // New manual task
 async function addManualTask() {
   editingTaskId = null;
+
+  const tagSelect = document.getElementById('edit-tag');
+  tagSelect.innerHTML = '';
+  App.chats.filter(c => !c.archived).forEach(chat => {
+    const option = document.createElement('option');
+    option.value = chat.tag;
+    option.textContent = chat.name;
+    tagSelect.appendChild(option);
+  });
+
   document.getElementById('edit-title').value = '';
   document.getElementById('edit-description').value = '';
   document.getElementById('edit-date').value = '';
   document.getElementById('edit-time').value = '';
-  document.getElementById('edit-tag').value = 'todo';
+  tagSelect.value = tagSelect.options[0].value || '';
+
+  document.getElementById('edit-modal-title').textContent = 'New Task';
   document.getElementById('edit-modal').classList.add('active');
 }
 

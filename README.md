@@ -2,13 +2,13 @@
 
 > Turn your thoughts into organized tasks — just type naturally.
 
-A conversational productivity app powered by Flask + Gemini AI.
+A conversational productivity app powered by Flask + OpenAI.
 
 ---
 
 ## ✦ Features
 
-- **Natural language input** — "chem lab due next Thursday at 5pm" becomes a tagged, scheduled task automatically
+- **Natural language input** — "chem lab due next Thursday at 5pm" is scheduled automatically
 - **Contextual editing** — "actually make that 6pm" updates your last task
 - **Duplicate detection** — smart pop-up when a task might already exist
 - **File attachments** — attach docs/images to tasks via the chat

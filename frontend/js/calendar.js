@@ -68,11 +68,14 @@ function buildDayCell(date, isOtherMonth, today) {
   const taskList = document.createElement('div');
   taskList.className = 'cal-task-list';
 
-  const maxVisible = 2;
+  const maxVisible = 4;
   dayTasks.slice(0, maxVisible).forEach(t => {
     const item = document.createElement('div');
     item.className = 'cal-task-item';
-    item.dataset.tag = t.tag;
+
+    const color = App.chats?.find(c => c.tag === t.tag)?.color || '#8b6fd4';
+    item.style.background = color;
+    
     item.textContent = t.title;
     taskList.appendChild(item);
   });
@@ -92,24 +95,29 @@ function buildDayCell(date, isOtherMonth, today) {
   return cell;
 }
 
+var currentDetailDate = null;
+
 function openDayDetail(date, tasks) {
-  const modal = document.getElementById('day-detail-modal');
+  currentDetailDate = date;
+  renderDayDetail(date);
+  document.getElementById('day-detail-modal').classList.add('active');
+}
+
+function renderDayDetail(date) {
+  const dateStr = formatDateStr(date);
+  const tasks = App.tasks.filter(t => t.due_date === dateStr);
+  
   const dateEl = document.getElementById('day-detail-date');
   const tasksEl = document.getElementById('day-detail-tasks');
 
   dateEl.textContent = date.toLocaleDateString([], { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });
-
   tasksEl.innerHTML = '';
+
   if (!tasks.length) {
     tasksEl.innerHTML = '<div class="day-detail-empty">No tasks on this day</div>';
   } else {
-    tasks.forEach(t => {
-      const card = buildTaskCard(t);
-      tasksEl.appendChild(card);
-    });
+    tasks.forEach(t => tasksEl.appendChild(buildTaskCard(t)));
   }
-
-  modal.classList.add('active');
 }
 
 function formatDateStr(date) {

@@ -18,7 +18,7 @@ Extract tasks from the message and return a JSON object with this exact structur
       "title": "short, clear task title",
       "date_reference": "raw date phrase or null",
       "time": "HH:MM in 24h format or null",
-      "description": "optional extra context or null"
+      "description": null
     }
   ],
   "is_edit_of_previous": false,
@@ -51,7 +51,7 @@ def parse_message(content: str, recent_tasks: list = None) -> dict:
         response = client.chat.completions.create(
             model="gpt-4o-mini",
             messages=[
-                {"role": "system", "content": SYSTEM_PROMPT + f"\n\nToday's date is {today_str}. Resolve all date references to actual YYYY-MM-DD format in the date_reference field instead of raw phrases." + context},
+                {"role": "system", "content": SYSTEM_PROMPT + f"\n\nToday is {today_str}. When resolving dates, 'monday' means the next upcoming Monday. Always resolve dates to YYYY-MM-DD format." + context},
                 {"role": "user", "content": content}
             ],
             temperature=0.1,
@@ -60,7 +60,9 @@ def parse_message(content: str, recent_tasks: list = None) -> dict:
         )
 
         raw = response.choices[0].message.content.strip()
-        return json.loads(raw)
+        result = json.loads(raw)
+        print(f"AI returned: {result}")
+        return result
 
     except Exception as e:
         import traceback
