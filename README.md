@@ -12,9 +12,8 @@ A conversational productivity app powered by Flask + OpenAI.
 - **Contextual editing** — "actually make that 6pm" updates your last task
 - **Duplicate detection** — smart pop-up when a task might already exist
 - **File attachments** — attach docs/images to tasks via the chat
-- **Dashboard view** — timeline organized by Overdue / Today / This Week / Later / Undated
+- **Dashboard view** — timeline organized by Overdue / Today / Days of the Week / Later / Undated
 - **Calendar view** — custom monthly grid with task indicators
-- **Drag & drop** — reorder tasks manually
 - **Polling** — dashboard updates every 2.5s when chat is active
 
 ---
@@ -25,9 +24,9 @@ A conversational productivity app powered by Flask + OpenAI.
 
 ```bash
 git clone <your-repo>
-cd dispatched
+cd dispatched2
 cp .env.example .env
-# Edit .env and fill in your GEMINI_API_KEY and a random SECRET_KEY
+# Edit .env and fill in your OPENAI_API_KEY and a random SECRET_KEY
 ```
 
 ### 2. Install dependencies
@@ -44,7 +43,7 @@ python -m backend.app
 flask --app backend.app run --debug --port 8000
 ```
 
-Open http://localhost:8000
+Open http://127.0.0.1:8000
 
 ---
 
@@ -53,16 +52,16 @@ Open http://localhost:8000
 | Variable | Description |
 |---|---|
 | `SECRET_KEY` | Random string for session signing |
-| `DATABASE_URL` | SQLite (default) or PostgreSQL URL |
-| `GEMINI_API_KEY` | Your Google Gemini API key |
+| `DATABASE_URL` | SQLite |
+| `OPENAI_API_KEY` | Your OpenAI API key |
 | `UPLOAD_FOLDER` | Path for file uploads (default: `./uploads`) |
 | `FLASK_ENV` | `development` or `production` |
 
 ---
 
-## ☁️ Use on GitHub Pages
+## ☁️ Use on Render
 
-Find the link here: 
+Find the link to the working site here: https://dispatched2.onrender.com/
 
 ## 📁 Project Structure
 
@@ -72,14 +71,17 @@ dispatched/
 │   ├── app.py              # Flask entry point
 │   ├── config.py           # Config + env vars
 │   ├── models/             # SQLAlchemy models
+│   │   ├── chat.py
 │   │   ├── user.py
 │   │   ├── message.py
 │   │   └── task.py
 │   ├── services/
 │   │   ├── gemini_parser.py    # AI parsing
 │   │   └── date_calculator.py  # "next Thursday" → date
+│   │   └── manual.py  # fallback in case the AI fails
 │   └── routes/
 │       ├── auth.py
+│       ├── chats.py
 │       ├── messages.py
 │       └── tasks.py
 ├── frontend/
@@ -110,7 +112,7 @@ dispatched/
 | Backend | Flask 3 (Python 3.10+) |
 | Frontend | HTML + CSS + Vanilla JS |
 | AI | OpenAI gpt-4o-mini |
-| Database | SQLite (dev) / PostgreSQL (prod) |
+| Database | SQLite |
 | Auth | Flask-Login + bcrypt |
 | Real-time | Polling every 2.5s |
 | Deployment | Gunicorn + Procfile |

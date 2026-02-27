@@ -508,3 +508,13 @@ body {
 .modal-close:hover { color: var(--text-primary); }
 
 .modal-card { position: relative; }
+
+/* Footer */
+.landing-footer {
+  text-align: center;
+  padding: 1.5rem 1rem;
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  opacity: 0.55;
+  border-top: 1px solid var(--border);
+}
