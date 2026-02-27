@@ -16,7 +16,7 @@ Extract tasks from the message and return a JSON object with this exact structur
   "tasks": [
     {
       "title": "short, clear task title",
-      "date_reference": "raw date phrase or null",
+      "date_reference": "YYYY-MM-DD or null",
       "time": "HH:MM in 24h format or null",
       "description": null
     }
@@ -34,6 +34,7 @@ Rules:
 - edit_value should be the new value as a string
 - If a task seems like it might already exist (same subject matter), set possible_duplicate_title
 - If no date is mentioned, date_reference should be null
+- date_reference MUST be a resolved YYYY-MM-DD date string (e.g. "2026-03-03"), never a phrase like "next Monday"
 - Keep titles concise (5 words or fewer ideally)
 - Return ONLY valid JSON, no markdown, no explanation
 """
@@ -51,7 +52,7 @@ def parse_message(content: str, recent_tasks: list = None) -> dict | None:
         response = client.chat.completions.create(
             model="gpt-4o-mini",
             messages=[
-                {"role": "system", "content": SYSTEM_PROMPT + f"\n\nToday is {today_str}. When resolving dates, 'monday' means the next upcoming Monday. Always resolve dates to YYYY-MM-DD format." + context},
+                {"role": "system", "content": SYSTEM_PROMPT + f"\n\nToday is {today_str}. Resolve all relative dates (e.g. 'monday', 'next week', 'tomorrow') to their exact YYYY-MM-DD value." + context},
                 {"role": "user", "content": content}
             ],
             temperature=0.1,

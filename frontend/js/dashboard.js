@@ -79,7 +79,6 @@ function renderTimeline() {
 
   if (overdue.length)  container.appendChild(buildSection('Overdue', overdue, 'overdue'));
   if (todayT.length)   container.appendChild(buildSection('Today', todayT, 'today'));
-  if (later.length)    container.appendChild(buildSection('Later', later));
   if (undated.length)  container.appendChild(buildSection('Undated', undated));
 
   // Group this week's tasks by day
@@ -92,7 +91,9 @@ function renderTimeline() {
       const label = i === 1 ? 'Tomorrow' : dayNames[d.getDay()];
       container.appendChild(buildSection(label, dayTasks));
     }
-  } 
+  }
+
+  if (later.length)    container.appendChild(buildSection('Later', later));
 
   const hasAnything = filteredTasks.some(t => t.status === 'active');
   if (!hasAnything) {
