@@ -347,6 +347,11 @@ function openColorPicker(chat) {
   const newSaveBtn = saveBtn.cloneNode(true);
   saveBtn.replaceWith(newSaveBtn);
 
+  const updatedChat = App.chats.find(c => c.id === chat.id);
+  if (updatedChat) {
+    document.querySelector('#chat-panel .panel-title').style.color = updatedChat.color;
+  }
+
   newSaveBtn.addEventListener('click', async () => {
     const color = document.getElementById('color-picker-input').value;
     const r = await api('PUT', `/api/chats/${chat.id}`, { color });

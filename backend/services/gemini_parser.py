@@ -38,7 +38,7 @@ Rules:
 - Return ONLY valid JSON, no markdown, no explanation
 """
 
-def parse_message(content: str, recent_tasks: list = None) -> dict:
+def parse_message(content: str, recent_tasks: list = None) -> dict | None:
     """Parse a user message and extract task data using OpenAI."""
     try:
         context = ""
@@ -68,7 +68,12 @@ def parse_message(content: str, recent_tasks: list = None) -> dict:
         import traceback
         traceback.print_exc()
         print(f"OpenAI parse error: {e}")
-        return {
+        return None
+    
+    
+    
+'''
+    {
             "tasks": [{
                 "title": content[:100],
                 "date_reference": None,
@@ -80,4 +85,4 @@ def parse_message(content: str, recent_tasks: list = None) -> dict:
             "edit_value": None,
             "possible_duplicate_title": None
         }
-
+'''

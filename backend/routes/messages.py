@@ -8,7 +8,7 @@ from ..models.message import Message
 from ..models.task import Task, TaskFile
 from ..services.gemini_parser import parse_message
 from ..services.date_calculator import resolve_date_reference 
-from ..services.manual import manualDate
+from ..services.manual import manualParse
 
 messages_bp = Blueprint('messages', __name__, url_prefix='/api/messages')
 
@@ -55,8 +55,12 @@ def create_message():
         .order_by(Task.created_at.desc()).limit(20).all()
     recent_tasks_dicts = [{'id': t.id, 'title': t.title} for t in recent_tasks]
 
-    # Parse with Gemini
+    # Parse with OPENAI
     parsed = parse_message(content, recent_tasks_dicts)
+
+    # handle error
+    if parsed == None:
+        parsed = manualParse(content)
 
     # Handle edits
     if parsed.get('is_edit_of_previous') and parsed.get('edit_field'):
@@ -110,8 +114,6 @@ def create_message():
     new_tasks = []
     for task_data in parsed.get('tasks', []):
         due_date = resolve_date_reference(task_data.get('date_reference'))
-        if due_date == None:
-            due_date = manualDate(content)
         due_time = None
         if task_data.get('time'):
             try:
@@ -193,8 +195,6 @@ def confirm_duplicate():
         if task_data.get('title'):
             task.title = task_data['title']
         due_date = resolve_date_reference(task_data.get('date_reference'))
-        if due_date == None:
-            due_date = manualDate(content)
         if due_date:
             task.due_date = due_date
         if task_data.get('time'):
