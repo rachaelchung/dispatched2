@@ -46,6 +46,10 @@ def create_app():
     def index():
         return send_from_directory('../frontend', 'index.html')
 
+    @app.route('/health')
+    def health():
+        return 'the backend is running!'
+
     @app.route('/app')
     @app.route('/app.html')
     def app_view():
