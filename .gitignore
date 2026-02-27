@@ -13,3 +13,6 @@ uploads/
 
 # OS
 .DS_Store
+
+# Logs
+.cursor
