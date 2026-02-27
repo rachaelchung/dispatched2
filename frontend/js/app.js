@@ -62,9 +62,7 @@ function renderThemeGrid() {
 // ============================
 // API HELPERS
 // ============================
-const API_BASE = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
-  ? ''
-  : 'https://dispatched2.onrender.com/';
+const API_BASE = '';
 
 async function api(method, path, body = null, isFormData = false) {
   const opts = {
