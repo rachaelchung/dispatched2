@@ -60,33 +60,9 @@ Open http://localhost:8000
 
 ---
 
-## ☁️ Deploy to Railway / Render / Heroku
+## ☁️ Use on GitHub Pages
 
-### Railway
-
-1. Push to GitHub
-2. New project → Deploy from GitHub repo
-3. Add environment variables in Railway dashboard
-4. Railway auto-detects `Procfile` → deploys with `gunicorn`
-
-### Render
-
-1. New Web Service → connect GitHub repo
-2. Build command: `pip install -r requirements.txt`
-3. Start command: `gunicorn backend.app:app`
-4. Add env vars in Render dashboard
-
-### Heroku
-
-```bash
-heroku create your-app-name
-heroku config:set SECRET_KEY=xxx GEMINI_API_KEY=xxx
-git push heroku main
-```
-
-For PostgreSQL on any platform, set `DATABASE_URL` to a `postgresql://` connection string.
-
----
+Find the link here: 
 
 ## 📁 Project Structure
 
@@ -133,7 +109,7 @@ dispatched/
 |---|---|
 | Backend | Flask 3 (Python 3.10+) |
 | Frontend | HTML + CSS + Vanilla JS |
-| AI | Google Gemini 1.5 Flash |
+| AI | OpenAI gpt-4o-mini |
 | Database | SQLite (dev) / PostgreSQL (prod) |
 | Auth | Flask-Login + bcrypt |
 | Real-time | Polling every 2.5s |
@@ -148,4 +124,4 @@ dispatched/
 - Multiple tasks at once: `"call mom and also submit the form by EOD"`
 - Add files by clicking 📎 before sending
 - Drag task cards to reorder within sections
-- Click calendar days to see all tasks for that day
+- Click calendar to see all tasks

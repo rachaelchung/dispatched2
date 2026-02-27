@@ -1,1 +1,15 @@
+# Environment
 .env
+venv/
+env/
+.venv/
+
+# Database
+instance/
+*.db
+
+# Uploads
+uploads/
+
+# OS
+.DS_Store
