@@ -3,6 +3,7 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
 
 from flask import Flask, send_from_directory
+from flask_cors import CORS
 from flask_login import LoginManager
 from backend.config import Config
 from backend.models import db
@@ -18,6 +19,9 @@ def create_app():
 
     # Init extensions
     db.init_app(app)
+
+    allowed_origins = os.environ.get('ALLOWED_ORIGINS', 'http://localhost:5005').split(',')
+    CORS(app, supports_credentials=True, origins=allowed_origins)
 
     login_manager = LoginManager()
     login_manager.init_app(app)

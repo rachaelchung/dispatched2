@@ -62,6 +62,10 @@ function renderThemeGrid() {
 // ============================
 // API HELPERS
 // ============================
+const API_BASE = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
+  ? ''
+  : 'https://your-app-name.onrender.com'; // TODO: replace with your Render URL
+
 async function api(method, path, body = null, isFormData = false) {
   const opts = {
     method,
@@ -69,7 +73,7 @@ async function api(method, path, body = null, isFormData = false) {
     headers: isFormData ? {} : { 'Content-Type': 'application/json' },
     body: body ? (isFormData ? body : JSON.stringify(body)) : null,
   };
-  const res = await fetch(path, opts);
+  const res = await fetch(`${API_BASE}${path}`, opts);
   if (res.status === 401) {
     window.location.href = '/';
     return;

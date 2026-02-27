@@ -1,8 +1,5 @@
 # Environment
 .env
-venv/
-env/
-.venv/
 
 # Database
 instance/
