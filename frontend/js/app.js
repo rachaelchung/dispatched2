@@ -64,7 +64,7 @@ function renderThemeGrid() {
 // ============================
 const API_BASE = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
   ? ''
-  : 'https://your-app-name.onrender.com'; // TODO: replace with your Render URL
+  : 'https://dispatched2.onrender.com/';
 
 async function api(method, path, body = null, isFormData = false) {
   const opts = {
