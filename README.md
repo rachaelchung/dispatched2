@@ -24,6 +24,7 @@ Find the link to the working site here: https://dispatched2.onrender.com/
 - **Dashboard view** — timeline organized by Overdue / Today / Days of the Week / Later / Undated
 - **Calendar view** — custom monthly grid with task indicators
 - **Polling** — dashboard updates every 2.5s when chat is active
+- **Themes** - use some custom themes to make your dashboard your own!
 
 ---
 
