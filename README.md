@@ -6,6 +6,12 @@ A conversational productivity app powered by Flask + OpenAI.
 
 ---
 
+## ☁️ Use Deployed App
+
+Find the link to the working site here: https://dispatched2.onrender.com/
+
+---
+
 ## ✦ Features
 
 - **Natural language input** — "chem lab due next Thursday at 5pm" is scheduled automatically
@@ -18,7 +24,7 @@ A conversational productivity app powered by Flask + OpenAI.
 
 ---
 
-## 🚀 Quick Start
+## 🚀 Run Locally
 
 ### 1. Clone and set up environment
 
@@ -58,10 +64,6 @@ Open http://127.0.0.1:8000
 | `FLASK_ENV` | `development` or `production` |
 
 ---
-
-## ☁️ Use on Render
-
-Find the link to the working site here: https://dispatched2.onrender.com/
 
 ## 📁 Project Structure
 

@@ -82,44 +82,44 @@
 
 /* Pink Lemonade */
 [data-theme="pink-lemonade"] {
-  --bg-deep:        #fff0f5;
-  --bg-base:        #fff5f8;
-  --bg-surface:     #ffffff;
-  --bg-elevated:    #ffe4ee;
-  --bg-hover:       #ffd6e7;
-  --bg-input:       #fff0f5;
-  --accent-primary: #e05c8a;
-  --accent-light:   #f07aa0;
-  --accent-soft:    #c04070;
-  --accent-glow:    rgba(224, 92, 138, 0.2);
-  --accent-glow-lg: rgba(224, 92, 138, 0.08);
-  --text-primary:   #2d1020;
-  --text-secondary: #7a3050;
-  --text-muted:     #c090a8;
-  --text-accent:    #e05c8a;
-  --border-subtle:  rgba(224, 92, 138, 0.15);
-  --border-mid:     rgba(224, 92, 138, 0.3);
+--bg-deep:        #fcfdf8;
+--bg-base:        #fffef9;
+--bg-surface:     #ffffff;
+--bg-elevated:    #fff9f0;
+--bg-hover:       #fff3e8;
+--bg-input:       #fcfdf8;
+--accent-primary: #f7a193;
+--accent-light:   #f7b091;
+--accent-soft:    #f7d993;
+--accent-glow:    rgba(247, 161, 147, 0.25);
+--accent-glow-lg: rgba(247, 161, 147, 0.1);
+--text-primary:   #3d2520;
+--text-secondary: #8a5540;
+--text-muted:     #c09080;
+--text-accent:    #f7a193;
+--border-subtle:  rgba(247, 161, 147, 0.2);
+--border-mid:     rgba(247, 161, 147, 0.35);
 }
 
-/* Copper */
-[data-theme="copper"] {
-  --bg-deep:        #1a1208;
-  --bg-base:        #221808;
-  --bg-surface:     #2e2010;
-  --bg-elevated:    #3d2c18;
-  --bg-hover:       #4a3520;
-  --bg-input:       #281e0c;
-  --accent-primary: #c87840;
-  --accent-light:   #e09050;
-  --accent-soft:    #a06030;
-  --accent-glow:    rgba(200, 120, 64, 0.25);
-  --accent-glow-lg: rgba(200, 120, 64, 0.1);
-  --text-primary:   #f0e0c8;
-  --text-secondary: #c0a080;
-  --text-muted:     #806040;
-  --text-accent:    #e09050;
-  --border-subtle:  rgba(200, 120, 64, 0.15);
-  --border-mid:     rgba(200, 120, 64, 0.3);
+/* Spiderman */
+[data-theme="spiderman"] {
+--bg-deep:        #0e1119;
+--bg-base:        #13161f;
+--bg-surface:     #1a1d28;
+--bg-elevated:    #20242f;
+--bg-hover:       #282c38;
+--bg-input:       #13161f;
+--accent-primary: #e23535;
+--accent-light:   #ff4d4d;
+--accent-soft:    #0576f2;
+--accent-glow:    rgba(226, 53, 53, 0.25);
+--accent-glow-lg: rgba(226, 53, 53, 0.1);
+--text-primary:   #f0f0f0;
+--text-secondary: #b8b8b8;
+--text-muted:     #6a6d78;
+--text-accent:    #e23535;
+--border-subtle:  rgba(226, 53, 53, 0.2);
+--border-mid:     rgba(226, 53, 53, 0.35);
 }
 
 /* Dev */
@@ -143,25 +143,46 @@
   --border-mid:     rgba(0, 204, 102, 0.3);
 }
 
-/* Dino */
-[data-theme="dino"] {
-  --bg-deep:        #1a2018;
-  --bg-base:        #202820;
-  --bg-surface:     #2a3528;
-  --bg-elevated:    #354030;
-  --bg-hover:       #3f4c38;
-  --bg-input:       #222a20;
-  --accent-primary: #6a9e58;
-  --accent-light:   #84be6e;
-  --accent-soft:    #507840;
-  --accent-glow:    rgba(106, 158, 88, 0.25);
-  --accent-glow-lg: rgba(106, 158, 88, 0.1);
-  --text-primary:   #d8e8d0;
-  --text-secondary: #90a888;
-  --text-muted:     #506848;
-  --text-accent:    #84be6e;
-  --border-subtle:  rgba(106, 158, 88, 0.15);
-  --border-mid:     rgba(106, 158, 88, 0.3);
+/* Godspeed */
+[data-theme="godspeed"] {
+--bg-deep:        #e9e3cf;
+--bg-base:        #efebe0;
+--bg-surface:     #f5f2e8;
+--bg-elevated:    #ddd7c0;
+--bg-hover:       #d1cbb8;
+--bg-input:       #e9e3cf;
+--accent-primary: #9abacd;
+--accent-light:   #b0cdd9;
+--accent-soft:    #ada898;
+--accent-glow:    rgba(154, 186, 205, 0.25);
+--accent-glow-lg: rgba(154, 186, 205, 0.1);
+--text-primary:   #64666a;
+--text-secondary: #7a7c80;
+--text-muted:     #a5a7ab;
+--text-accent:    #9abacd;
+--border-subtle:  rgba(154, 186, 205, 0.2);
+--border-mid:     rgba(154, 186, 205, 0.35);
+}
+
+/* Bonsai */
+[data-theme="bonsai"] {
+--bg-deep:        #cac3bf;
+--bg-base:        #d5cfc9;
+--bg-surface:     #e0dbd7;
+--bg-elevated:    #bfb8b4;
+--bg-hover:       #b4ada9;
+--bg-input:       #cac3bf;
+--accent-primary: #7ea482;
+--accent-light:   #94b89a;
+--accent-soft:    #727574;
+--accent-glow:    rgba(126, 164, 130, 0.25);
+--accent-glow-lg: rgba(126, 164, 130, 0.1);
+--text-primary:   #131313;
+--text-secondary: #3d3d3d;
+--text-muted:     #727574;
+--text-accent:    #7ea482;
+--border-subtle:  rgba(126, 164, 130, 0.2);
+--border-mid:     rgba(126, 164, 130, 0.35);
 }
 
 /* Theme swatch card */

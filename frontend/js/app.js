@@ -17,10 +17,11 @@ const THEMES = [
   { id: 'dark',         name: 'Dark',         colors: ['#1a1820', '#2a2738', '#8b6fd4', '#e8e4f0'] },
   { id: 'light',        name: 'Light',        colors: ['#f0eef8', '#ffffff', '#7c5cbf', '#1e1a2e'] },
   { id: 'blueberry',    name: 'Blueberry',    colors: ['#0e1117', '#1c2133', '#5b7fe8', '#e0e8ff'] },
-  { id: 'pink-lemonade',name: 'Pink Lemonade',colors: ['#fff0f5', '#ffffff', '#e05c8a', '#2d1020'] },
-  { id: 'copper',       name: 'Copper',       colors: ['#1a1208', '#2e2010', '#c87840', '#f0e0c8'] },
+  { id: 'pink-lemonade',name: 'Pink Lemon',   colors: ['#fcfdf8', '#f7d993', '#f7b091', '#f7a193'] },
+  { id: 'spiderman',    name: 'Spiderman',    colors: ['#0e1119', '#e23535', '#0576f2', '#f0f0f0'] },
   { id: 'dev',          name: 'Dev',          colors: ['#000000', '#111111', '#00cc66', '#00ff80'] },
-  { id: 'dino',         name: 'Dino',         colors: ['#1a2018', '#2a3528', '#6a9e58', '#d8e8d0'] },
+  { id: 'godspeed',     name: 'Godspeed',     colors: ['#e9e3cf', '#9abacd', '#ada898', '#64666a'] },
+  { id: 'bonsai',       name: 'Bonsai',       colors: ['#727574', '#7ea482', '#cac3bf', '#131313'] }
 ];
 
 function applyTheme(themeId) {
