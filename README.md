@@ -1,8 +1,10 @@
-# DISPATCH
+# DISPATCH.
 
 > Turn your thoughts into organized tasks — just type naturally.
 
 A conversational productivity app powered by Flask + OpenAI.
+
+This app was built for those who find they remember tasks best when they can just shoot themself a quick message, but often feel overwhelmed or disorganized with messages getting lost and due dates getting tangled up. DISPATCH lets you type messages to yourself like you normally would, but now an AI also parses through your messages to get dates and times and multiple tasks to add into a running ToDo list and calendar.
 
 ---
 
@@ -15,6 +17,7 @@ Find the link to the working site here: https://dispatched2.onrender.com/
 ## ✦ Features
 
 - **Natural language input** — "chem lab due next Thursday at 5pm" is scheduled automatically
+- **Multiple chats and tags** — create new chats to type in and use to tag your tasks
 - **Contextual editing** — "actually make that 6pm" updates your last task
 - **Duplicate detection** — smart pop-up when a task might already exist
 - **File attachments** — attach docs/images to tasks via the chat
